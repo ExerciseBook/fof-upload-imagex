@@ -1,0 +1,33 @@
+fof-upload:
+  admin:
+    upload_methods:
+      imagex: ImageX
+
+exercisebook-fof-upload-imagex:
+  admin:
+    labels:
+      imagexLabel:
+        title: ImageX storage settings
+        region: Region
+        regionOption:
+          cn-north-1: North China
+          us-east-1: Eastern United States
+          ap-singapore-1: Singapore
+        accessKey: Access Key
+        secretKey: Secret Key
+        serviceId: Service Id
+        domain: Binded domain
+        template: Template
+
+      imagexHelp:
+        region: United States and Singapore is limited to Enterprise customers.
+        accessKey: You can get your AccessKey and SecretKey from https://console.volcengine.com/iam/keymanage/
+        secretKey: You can get your AccessKey and SecretKey from https://console.volcengine.com/iam/keymanage/
+        serviceId: The serviceId of your ImageX service.
+        domain: The domain you set in your ImageX service.
+        template: (Optional) The template for your processing procedure.
+
+    template:
+      image-preview:
+        name: ImageX Preview Template
+        description: ImageX preview template for image processing.

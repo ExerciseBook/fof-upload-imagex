@@ -1,0 +1,44 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "exercisebook/fof-upload-imagex",
+    "description": "fof/upload VolcEngine ImageX support.",
+    "keywords": [
+        "upload",
+        "flarum",
+        "file"
+    ],
+    "type": "flarum-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eric_Lian",
+            "email": "public@superexercisebook.com",
+            "homepage": "https://superexercisebook.com/"
+        }
+    ],
+    "require": {
+        "fof/upload": "^1.2",
+        "exercisebook/flysystem-imagex": "<1.0.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "symfony/polyfill-php80": "^1.23"
+    },
+    "extra": {
+        "flarum-extension": {
+            "title": "FoF Upload ImageX",
+            "category": "feature",
+            "icon": {
+                "name": "fas fa-file-upload",
+                "backgroundColor": "#e74c3c",
+                "color": "#fff"
+            }
+        },
+        "flagrow": {
+            "discuss": "https://discuss.flarum.org/d/114514"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "ExerciseBook\\FofUploadImageX\\": "src/"
+        }
+    }
+}
