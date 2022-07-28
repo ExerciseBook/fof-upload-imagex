@@ -26,6 +26,9 @@ class ImageXConfiguration
     {
         $config = new ImageXConfig();
         $config->region = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.region', 'cn-north-1');
+        if ($config->region == null || strlen($config->region) == 0) {
+            $config->region = 'cn-north-1';
+        }
         $config->accessKey = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.accessKey');
         $config->secretKey = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.secretKey');
         $config->serviceId = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.serviceId');
