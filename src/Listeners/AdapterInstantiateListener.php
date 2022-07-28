@@ -24,6 +24,6 @@ class AdapterInstantiateListener
             return null;
         }
 
-        return new ImageXFofAdapter($this->config->imagexConfig);
+        return new ImageXFofAdapter($this->config);
     }
 }

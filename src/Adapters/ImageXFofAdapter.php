@@ -4,6 +4,7 @@ namespace ExerciseBook\FofUploadImageX\Adapters;
 
 use ExerciseBook\Flysystem\ImageX\ImageXAdapter;
 use ExerciseBook\Flysystem\ImageX\ImageXConfig;
+use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use FoF\Upload\Adapters\Flysystem;
 use FoF\Upload\Contracts\UploadAdapter;
 use FoF\Upload\File;
@@ -27,20 +28,26 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
      */
     private $arrConfig;
 
+    /**
+     * @param $config ImageXConfiguration
+     */
     public function __construct($config)
     {
-        parent::__construct(new ImageXAdapter($config));
+        parent::__construct(new ImageXAdapter($config->imagexConfig));
 
         // Save config
-        $this->config = new ImageXConfig();
+        $this->config = $config->imagexConfig;
 
-        $this->config->region = $config['region'];
-        $this->config->accessKey = $config['access_key'];
-        $this->config->secretKey = $config['secret_key'];
-        $this->config->serviceId = $config['service_id'];
-        $this->config->domain = $config['domain'];
+        $arrConfig = [
+            'region' => $this->config->region,
+            'access_key' => $this->config->accessKey,
+            'secret_key' => $this->config->secretKey,
+            'service_id' => $this->config->serviceId,
+            'domain' => $this->config->domain,
+            'template' => $config->template,
+        ];
 
-        $this->arrConfig = $config;
+        $this->arrConfig = $arrConfig;
         $this->uriPrefix = $this->adapter->imageXBuildUriPrefix();
     }
 
@@ -56,7 +63,7 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
         $template = $this->arrConfig['template'];
 
         if (Str::startsWith($type, 'image/') && $template) {
-            $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path . '~' . $template . '.image';
+            $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path . $template;
         } else {
             $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path;
         }
