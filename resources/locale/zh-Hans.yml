@@ -1,0 +1,38 @@
+fof-upload:
+  admin:
+    upload_methods:
+      imagex: ImageX
+
+exercisebook-fof-upload-imagex:
+  admin:
+    labels:
+      imagexLabel:
+        title: ImageX 存储设置
+        region: 区域
+        regionOption:
+          cn-north-1: 国内
+          us-east-1: 美东
+          ap-singapore-1: 新加坡
+        accessKey: Access Key
+        secretKey: Secret Key
+        serviceId: 服务 ID
+        domain: 绑定域名
+        imagePreviewTemplate: 图像处理模板
+        fileRetrievingSignatureToken: 文件鉴权密钥
+
+      imagexHelp:
+        region: 美东和新加坡仅对企业用户开放
+        accessKey: 您可以在这里找到您的 AccessKey https://console.volcengine.com/iam/keymanage/
+        secretKey: 您可以在这里找到您的 SecretKey and SecretKey from https://console.volcengine.com/iam/keymanage/
+        serviceId: 您的 ImageX 服务 ID
+        domain: 您的 ImageX 服务域名
+        imagePreviewTemplate: （可选的）图像处理模板
+        fileRetrievingSignatureToken: |-
+          （可选的）使用文件鉴权密钥可以实现防盗链功能。
+          本插件使用方法 C 作为文件鉴权方式。 
+          火山引擎 ImageX 鉴权说明：https://www.volcengine.com/docs/508/75859
+
+    template:
+      image-preview:
+        name: ImageX 图像预览模板
+        description: ImageX 图像预览模板

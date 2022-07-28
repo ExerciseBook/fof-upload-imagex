@@ -17,26 +17,21 @@ class ImageXConfiguration
      */
     public $template;
 
+    /**
+     * @var string
+     */
+    public $fileRetrievingSignatureToken;
+
     public function __construct(SettingsRepositoryInterface $settings)
     {
-        if (
-            !$settings->get('exercisebook-fof-upload-imagex.imagexConfig.accessKey') ||
-            !$settings->get('exercisebook-fof-upload-imagex.imagexConfig.secretKey') ||
-            !$settings->get('exercisebook-fof-upload-imagex.imagexConfig.serviceId') ||
-            !$settings->get('exercisebook-fof-upload-imagex.imagexConfig.domain')
-        ) {
-            return null;
-        }
-
-
         $config = new ImageXConfig();
         $config->region = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.region', 'cn-north-1');
         $config->accessKey = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.accessKey');
         $config->secretKey = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.secretKey');
         $config->serviceId = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.serviceId');
         $config->domain = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.domain');
-        $this->template = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.template', ''));
-
+        $this->template = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imagePreviewTemplate', ''));
+        $this->fileRetrievingSignatureToken = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.fileRetrievingSignatureToken', '');
         $this->imagexConfig = $config;
     }
 
@@ -63,5 +58,18 @@ class ImageXConfiguration
         }
 
         return $ret;
+    }
+
+    public function needSignature()
+    {
+        return $this->fileRetrievingSignatureToken != null && strlen($this->fileRetrievingSignatureToken) > 0;
+    }
+
+    public function signPath(string $signPath)
+    {
+        $sign_ts = time();
+        $sign_payload = sprintf("%s%s%x", $this->fileRetrievingSignatureToken, $signPath, $sign_ts);
+        $sign = strtolower(md5($sign_payload));
+        return sprintf("%s/%s/%x%s", $this->imagexConfig->domain, $sign, $sign_ts, $signPath);
     }
 }

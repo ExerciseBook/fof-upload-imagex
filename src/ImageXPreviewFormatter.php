@@ -47,10 +47,18 @@ class ImageXPreviewFormatter
         return Utils::replaceAttributes($xml, 'UPL-IMAGEX-PREVIEW', function ($attributes) {
             $file = $this->files->findByUuid($attributes['uuid']);
 
-            if (strlen($this->config->template) == 0) {
-                $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path;
+            if ($this->config->needSignature()) {
+                if (str_starts_with($file->type, 'image/') && strlen($this->config->template) == 0) {
+                    $attributes["url"] = "//" . $this->config->signPath('/' . $file->path);
+                } else {
+                    $attributes["url"] = "//" . $this->config->signPath('/' . $file->path . $this->config->template);
+                }
             } else {
-                $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path . $this->config->template;
+                if (str_starts_with($file->type, 'image/') && strlen($this->config->template) == 0) {
+                    $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path;
+                } else {
+                    $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path . $this->config->template;
+                }
             }
 
             $attributes["base_name"] = $file->base_name;

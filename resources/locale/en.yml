@@ -17,7 +17,8 @@ exercisebook-fof-upload-imagex:
         secretKey: Secret Key
         serviceId: Service Id
         domain: Binded domain
-        template: Template
+        imagePreviewTemplate: Image Procesing Template
+        fileRetrievingSignatureToken: File-retrieving Signature Token
 
       imagexHelp:
         region: United States and Singapore is limited to Enterprise customers.
@@ -25,7 +26,11 @@ exercisebook-fof-upload-imagex:
         secretKey: You can get your AccessKey and SecretKey from https://console.volcengine.com/iam/keymanage/
         serviceId: The serviceId of your ImageX service.
         domain: The domain you set in your ImageX service.
-        template: (Optional) The template for your processing procedure.
+        imagePreviewTemplate: (Optional) Use this template to process the image in discussions.
+        fileRetrievingSignatureToken: |-
+          (Optional) The file-retrieving signature token permits the user to load or download files in a limited time.
+          In this plugin, we use method C for signature. 
+          Learn more: https://www.volcengine.com/docs/508/75859
 
     template:
       image-preview:
