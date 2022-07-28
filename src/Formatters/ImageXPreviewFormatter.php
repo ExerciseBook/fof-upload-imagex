@@ -1,12 +1,11 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Formatters;
 
-use Flarum\Foundation\Paths;
+use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use FoF\Upload\Repositories\FileRepository;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ImageXPreviewFormatter
 {

@@ -2,6 +2,10 @@
 
 namespace ExerciseBook\FofUploadImageX;
 
+use ExerciseBook\FofUploadImageX\Formatters\ImageXPreviewFormatter;
+use ExerciseBook\FofUploadImageX\Listeners\AdapterInstantiateListener;
+use ExerciseBook\FofUploadImageX\Listeners\AdapterRegisterListener;
+use ExerciseBook\FofUploadImageX\Providers\ImageXProvider;
 use Flarum\Extend;
 use FoF\Upload\Events\Adapter\Collecting;
 use FoF\Upload\Events\Adapter\Instantiate;

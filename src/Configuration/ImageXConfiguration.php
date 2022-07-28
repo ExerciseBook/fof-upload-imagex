@@ -1,6 +1,6 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Configuration;
 
 use ExerciseBook\Flysystem\ImageX\ImageXConfig;
 use Flarum\Settings\SettingsRepositoryInterface;

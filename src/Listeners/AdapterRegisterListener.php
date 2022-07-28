@@ -1,6 +1,6 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Listeners;
 
 use FoF\Upload\Events\Adapter\Collecting;
 

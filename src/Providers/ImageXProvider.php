@@ -1,7 +1,9 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Providers;
 
+use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
+use ExerciseBook\FofUploadImageX\Templates\ImageXPreviewTemplate;
 use Flarum\Foundation\AbstractServiceProvider;
 use FoF\Upload\Helpers\Util;
 

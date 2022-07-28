@@ -1,7 +1,9 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Listeners;
 
+use ExerciseBook\FofUploadImageX\Adapters\ImageXFofAdapter;
+use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use FoF\Upload\Events\Adapter\Instantiate;
 
 class AdapterInstantiateListener

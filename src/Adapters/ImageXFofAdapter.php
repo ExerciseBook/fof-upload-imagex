@@ -1,6 +1,6 @@
 <?php
 
-namespace ExerciseBook\FofUploadImageX;
+namespace ExerciseBook\FofUploadImageX\Adapters;
 
 use ExerciseBook\Flysystem\ImageX\ImageXAdapter;
 use ExerciseBook\Flysystem\ImageX\ImageXConfig;
