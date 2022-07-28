@@ -4,6 +4,7 @@ namespace ExerciseBook\FofUploadImageX\Formatters;
 
 use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use FoF\Upload\Repositories\FileRepository;
+use Illuminate\Support\Str;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
@@ -47,16 +48,16 @@ class ImageXPreviewFormatter
             $file = $this->files->findByUuid($attributes['uuid']);
 
             if ($this->config->needSignature()) {
-                if (str_starts_with($file->type, 'image/') && strlen($this->config->template) == 0) {
-                    $attributes["url"] = "//" . $this->config->signPath('/' . $file->path);
-                } else {
+                if (Str::startsWith($file->type, 'image/') && strlen($this->config->template) > 0) {
                     $attributes["url"] = "//" . $this->config->signPath('/' . $file->path . $this->config->template);
+                } else {
+                    $attributes["url"] = "//" . $this->config->signPath('/' . $file->path);
                 }
             } else {
-                if (str_starts_with($file->type, 'image/') && strlen($this->config->template) == 0) {
-                    $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path;
-                } else {
+                if (Str::startsWith($file->type, 'image/') && strlen($this->config->template) > 0) {
                     $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path . $this->config->template;
+                } else {
+                    $attributes["url"] = "//" . $this->imagexConfig->domain . '/' . $file->path;
                 }
             }
 

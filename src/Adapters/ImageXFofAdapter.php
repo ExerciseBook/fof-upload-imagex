@@ -62,7 +62,7 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
         $path = $file->getAttribute('path');
         $template = $this->arrConfig['template'];
 
-        if (Str::startsWith($type, 'image/') && $template) {
+        if (Str::startsWith($type, 'image/') && strlen($template) > 0) {
             $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path . $template;
         } else {
             $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path;
