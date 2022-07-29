@@ -6,6 +6,7 @@ use ExerciseBook\FofUploadImageX\Formatters\ImageXPreviewFormatter;
 use ExerciseBook\FofUploadImageX\Listeners\AdapterInstantiateListener;
 use ExerciseBook\FofUploadImageX\Listeners\AdapterRegisterListener;
 use ExerciseBook\FofUploadImageX\Providers\ImageXProvider;
+use Flarum\Api\Serializer\PostSerializer;
 use Flarum\Extend;
 use FoF\Upload\Events\Adapter\Collecting;
 use FoF\Upload\Events\Adapter\Instantiate;
@@ -23,6 +24,8 @@ return [
     (new Extend\View())
         ->namespace('exercisebook-fof-upload-imagex.templates', __DIR__ . '/resources/templates'),
 
+    (new Extend\ApiSerializer(PostSerializer::class))
+        ->attributes(Extenders\AddCurrentPostAttributes::class),
 
     (new Extend\ServiceProvider())
         ->register(ImageXProvider::class),
