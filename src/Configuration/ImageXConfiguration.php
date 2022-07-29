@@ -4,6 +4,8 @@ namespace ExerciseBook\FofUploadImageX\Configuration;
 
 use ExerciseBook\Flysystem\ImageX\ImageXConfig;
 use Flarum\Settings\SettingsRepositoryInterface;
+use FoF\Upload\File;
+use Illuminate\Support\Str;
 
 class ImageXConfiguration
 {
@@ -63,16 +65,52 @@ class ImageXConfiguration
         return $ret;
     }
 
+    /**
+     * @return bool
+     */
     public function needSignature()
     {
         return $this->fileRetrievingSignatureToken != null && strlen($this->fileRetrievingSignatureToken) > 0;
     }
 
-    public function signPath(string $signPath)
+    /**
+     * @return bool
+     */
+    public function hasTemplate()
+    {
+        return $this->template != null && strlen($this->template) > 0;
+    }
+
+    /**
+     * @param $signPath string
+     * @return string
+     */
+    public function signPath($signPath)
     {
         $sign_ts = time();
         $sign_payload = sprintf("%s%s%x", $this->fileRetrievingSignatureToken, $signPath, $sign_ts);
         $sign = strtolower(md5($sign_payload));
         return sprintf("%s/%s/%x%s", $this->imagexConfig->domain, $sign, $sign_ts, $signPath);
+    }
+
+    /**
+     * @param $file File
+     * @return string
+     */
+    public function generateUrl($file)
+    {
+        if ($this->needSignature()) {
+            if (Str::startsWith($file->type, 'image/') && $this->hasTemplate()) {
+                return "//" . $this->signPath('/' . $file->path . $this->template);
+            } else {
+                return "//" . $this->signPath('/' . $file->path);
+            }
+        } else {
+            if (Str::startsWith($file->type, 'image/') && $this->hasTemplate()) {
+                return "//" . $this->imagexConfig->domain . '/' . $file->path . $this->template;
+            } else {
+                return "//" . $this->imagexConfig->domain . '/' . $file->path;
+            }
+        }
     }
 }

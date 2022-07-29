@@ -14,11 +14,6 @@ use League\Flysystem\Config;
 class ImageXFofAdapter extends Flysystem implements UploadAdapter
 {
     /**
-     * @var string Resources uri Prefix
-     */
-    private $uriPrefix;
-
-    /**
      * @var ImageXConfig ImageX Client Settings
      */
     private $config;
@@ -29,14 +24,19 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
     private $arrConfig;
 
     /**
-     * @param $config ImageXConfiguration
+     * @var ImageXConfiguration
      */
-    public function __construct($config)
+    private $pluginConfig;
+
+    /**
+     * @param $pluginConfig ImageXConfiguration
+     */
+    public function __construct($pluginConfig)
     {
-        parent::__construct(new ImageXAdapter($config->imagexConfig));
+        parent::__construct(new ImageXAdapter($pluginConfig->imagexConfig));
 
         // Save config
-        $this->config = $config->imagexConfig;
+        $this->config = $pluginConfig->imagexConfig;
 
         $arrConfig = [
             'region' => $this->config->region,
@@ -44,11 +44,11 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
             'secret_key' => $this->config->secretKey,
             'service_id' => $this->config->serviceId,
             'domain' => $this->config->domain,
-            'template' => $config->template,
+            'template' => $pluginConfig->template,
         ];
-
         $this->arrConfig = $arrConfig;
-        $this->uriPrefix = $this->adapter->imageXBuildUriPrefix();
+
+        $this->pluginConfig = $pluginConfig;
     }
 
     protected function getConfig()
@@ -58,15 +58,6 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
 
     protected function generateUrl(File $file)
     {
-        $type = mb_strtolower($file->type);
-        $path = $file->getAttribute('path');
-        $template = $this->arrConfig['template'];
-
-        if (Str::startsWith($type, 'image/') && strlen($template) > 0) {
-            $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path . $template;
-        } else {
-            $url = '//' . $this->config->domain . '/' . $this->uriPrefix . '/' . $path;
-        }
-        $file->url = $url;
+        $file->url = $this->pluginConfig->generateUrl($file);
     }
 }
