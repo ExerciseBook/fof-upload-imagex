@@ -39,7 +39,8 @@ class ImageXPreviewFormatter
     {
         return Utils::replaceAttributes($xml, 'UPL-IMAGEX-PREVIEW', function ($attributes) {
             $file = $this->files->findByUuid($attributes['uuid']);
-            $attributes["url"] = $this->config->generateUrl($file);
+            $attributes["preview_uri"] = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
+            $attributes["fullscreen_uri"] = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
             $attributes["base_name"] = $file->base_name;
             return $attributes;
         });

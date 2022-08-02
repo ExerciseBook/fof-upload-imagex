@@ -17,7 +17,12 @@ class ImageXConfiguration
     /**
      * @var string
      */
-    public $template;
+    public $imagePreviewTemplate;
+
+    /**
+     * @var string
+     */
+    public $imageFullscreenTemplate;
 
     /**
      * @var string
@@ -35,7 +40,8 @@ class ImageXConfiguration
         $config->secretKey = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.secretKey');
         $config->serviceId = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.serviceId');
         $config->domain = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.domain');
-        $this->template = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imagePreviewTemplate', ''));
+        $this->imagePreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imagePreviewTemplate', ''));
+        $this->imageFullscreenTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imageFullscreenTemplate', ''));
         $this->fileRetrievingSignatureToken = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.fileRetrievingSignatureToken', '');
         $this->imagexConfig = $config;
     }
@@ -74,11 +80,12 @@ class ImageXConfiguration
     }
 
     /**
+     * @param $template string
      * @return bool
      */
-    public function hasTemplate()
+    public function isTemplate($template)
     {
-        return $this->template != null && strlen($this->template) > 0;
+        return $template != null && strlen($template) > 0;
     }
 
     /**
@@ -95,19 +102,20 @@ class ImageXConfiguration
 
     /**
      * @param $file File
+     * @param $template string
      * @return string
      */
-    public function generateUrl($file)
+    public function generateUrl($file, $template)
     {
         if ($this->needSignature()) {
-            if (Str::startsWith($file->type, 'image/') && $this->hasTemplate()) {
-                return "//" . $this->signPath('/' . $file->path . $this->template);
+            if (Str::startsWith($file->type, 'image/') && $this->isTemplate($template)) {
+                return "//" . $this->signPath('/' . $file->path . $template);
             } else {
                 return "//" . $this->signPath('/' . $file->path);
             }
         } else {
-            if (Str::startsWith($file->type, 'image/') && $this->hasTemplate()) {
-                return "//" . $this->imagexConfig->domain . '/' . $file->path . $this->template;
+            if (Str::startsWith($file->type, 'image/') && $this->isTemplate($template)) {
+                return "//" . $this->imagexConfig->domain . '/' . $file->path . $template;
             } else {
                 return "//" . $this->imagexConfig->domain . '/' . $file->path;
             }

@@ -41,11 +41,11 @@ class ImageXPreviewTemplate extends AbstractTextFormatterTemplate
      */
     public function bbcode(): string
     {
-        return '[upl-imagex-preview uuid={IDENTIFIER} url={URL}]';
+        return '[upl-imagex-preview uuid={IDENTIFIER} preview_uri={URL} fullscreen_uri={URL}]';
     }
 
     public function preview(File $file): string
     {
-        return "[upl-imagex-preview uuid={$file->uuid} url={$file->url}]";
+        return "[upl-imagex-preview uuid={$file->uuid} preview_uri={$file->url} fullscreen_uri={URL}]";
     }
 }

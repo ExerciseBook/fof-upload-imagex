@@ -69,7 +69,16 @@ app.initializers.add('exercisebook-fof-upload-imagex', function (app) {
                 help: help('imagePreviewTemplate'),
                 type: 'text',
             },
-            520
+            510
+        )
+        .registerSetting(
+            {
+                setting: setting('imageFullscreenTemplate'),
+                label: label('imageFullscreenTemplate'),
+                help: help('imageFullscreenTemplate'),
+                type: 'text',
+            },
+            500
         )
 
         .registerSetting(

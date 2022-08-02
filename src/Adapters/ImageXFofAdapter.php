@@ -8,7 +8,6 @@ use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use FoF\Upload\Adapters\Flysystem;
 use FoF\Upload\Contracts\UploadAdapter;
 use FoF\Upload\File;
-use Illuminate\Support\Str;
 use League\Flysystem\Config;
 
 class ImageXFofAdapter extends Flysystem implements UploadAdapter
@@ -44,7 +43,7 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
             'secret_key' => $this->config->secretKey,
             'service_id' => $this->config->serviceId,
             'domain' => $this->config->domain,
-            'template' => $pluginConfig->template,
+            'template' => $pluginConfig->imagePreviewTemplate,
         ];
         $this->arrConfig = $arrConfig;
 
@@ -58,6 +57,6 @@ class ImageXFofAdapter extends Flysystem implements UploadAdapter
 
     protected function generateUrl(File $file)
     {
-        $file->url = $this->pluginConfig->generateUrl($file);
+        $file->url = $this->pluginConfig->generateUrl($file, $this->pluginConfig->imagePreviewTemplate);
     }
 }

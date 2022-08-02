@@ -72,8 +72,9 @@ class AddCurrentPostAttributes
             }
 
             $uuid = $file->uuid;
-            $url = $this->config->generateUrl($file);
-            return "[upl-imagex-preview uuid=${uuid} url=${url}]";
+            $previewUri = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
+            $fullscreenUri = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
+            return "[upl-imagex-preview uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
         }, $content);
     }
 }
