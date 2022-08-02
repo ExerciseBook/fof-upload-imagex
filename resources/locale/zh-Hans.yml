@@ -17,7 +17,7 @@ exercisebook-fof-upload-imagex:
         secretKey: Secret Key
         serviceId: 服务 ID
         domain: 绑定域名
-        imagePreviewTemplate: 图像小处理模板
+        imagePreviewTemplate: 图像小图处理模板
         imageFullscreenTemplate: 图像大图处理模板
         fileRetrievingSignatureToken: 文件鉴权密钥
 
@@ -27,7 +27,7 @@ exercisebook-fof-upload-imagex:
         secretKey: 您可以在这里找到您的 SecretKey and SecretKey from https://console.volcengine.com/iam/keymanage/
         serviceId: 您的 ImageX 服务 ID
         domain: 您的 ImageX 服务域名
-        imagePreviewTemplate: （可选的）图像小处理模板
+        imagePreviewTemplate: （可选的）图像小图处理模板
         imageFullscreenTemplate: （可选的）图像大图处理模板，当使用 `iamdarkle/fancybox` 时将作为大图的显示方式，建议留空。
         fileRetrievingSignatureToken: |-
           （可选的）使用文件鉴权密钥可以实现防盗链功能。
