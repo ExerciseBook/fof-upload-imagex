@@ -34,6 +34,10 @@ class AddCurrentPostAttributes
             return $attributes;
         }
 
+        if (!isset($attributes['contentType']) || ($attributes['contentType'] !== 'comment')) {
+            return $attributes; 
+        }
+
         $content = $attributes['content'];
         $content = $this->replaceImageXBBCode($content);
         $attributes['content'] = $content;
