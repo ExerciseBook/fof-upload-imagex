@@ -4,6 +4,7 @@ namespace ExerciseBook\FofUploadImageX\Providers;
 
 use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
 use ExerciseBook\FofUploadImageX\Templates\ImageXPreviewTemplate;
+use ExerciseBook\FofUploadImageX\Templates\ImageXVideoPreviewTemplate;
 use Flarum\Foundation\AbstractServiceProvider;
 use FoF\Upload\Helpers\Util;
 
@@ -17,5 +18,6 @@ class ImageXProvider extends AbstractServiceProvider
         $util = $this->container->make(Util::class);
 
         $util->addRenderTemplate($this->container->make(ImageXPreviewTemplate::class));
+        $util->addRenderTemplate($this->container->make(ImageXVideoPreviewTemplate::class));
     }
 }

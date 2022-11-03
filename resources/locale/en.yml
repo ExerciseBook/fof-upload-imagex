@@ -19,6 +19,7 @@ exercisebook-fof-upload-imagex:
         domain: Binded domain
         imagePreviewTemplate: Image Preview Procesing Template
         imageFullscreenTemplate: Image Fullscreen Procesing Template
+        videoPreviewTemplate: Video Preview Procesing Template
         fileRetrievingSignatureToken: File-retrieving Signature Token
 
       imagexHelp:
@@ -29,6 +30,7 @@ exercisebook-fof-upload-imagex:
         domain: The domain you set in your ImageX service.
         imagePreviewTemplate: (Optional) Use this template to process the image in discussions.
         imageFullscreenTemplate: (Optional) Use this template to process the image in discussions when using `iamdarkle/fancybox`. Recommended for leaving it blank.
+        videoPreviewTemplate: （Optional）Use this template to process the video in discussions.
         fileRetrievingSignatureToken: |-
           (Optional) The file-retrieving signature token permits the user to load or download files in a limited time.
           In this plugin, we use method C for signature. 
@@ -38,3 +40,6 @@ exercisebook-fof-upload-imagex:
       image-preview:
         name: ImageX Preview Template
         description: ImageX preview template for image processing.
+      video-preview:
+        name: ImageX Video Preview Template
+        description: ImageX preview template for video processing.

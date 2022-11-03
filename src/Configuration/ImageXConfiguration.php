@@ -27,6 +27,11 @@ class ImageXConfiguration
     /**
      * @var string
      */
+    public $videoPreviewTemplate;
+
+    /**
+     * @var string
+     */
     public $fileRetrievingSignatureToken;
 
     public function __construct(SettingsRepositoryInterface $settings)
@@ -43,6 +48,7 @@ class ImageXConfiguration
         $this->imagePreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imagePreviewTemplate', ''));
         $this->imageFullscreenTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imageFullscreenTemplate', ''));
         $this->fileRetrievingSignatureToken = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.fileRetrievingSignatureToken', '');
+        $this->videoPreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.videoPreviewTemplate', ''));
         $this->imagexConfig = $config;
     }
 

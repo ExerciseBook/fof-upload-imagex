@@ -3,6 +3,8 @@
 namespace ExerciseBook\FofUploadImageX\Extenders;
 
 use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
+use ExerciseBook\FofUploadImageX\Templates\ImageXPreviewTemplate;
+use ExerciseBook\FofUploadImageX\Templates\ImageXVideoPreviewTemplate;
 use Flarum\Api\Serializer\PostSerializer;
 use Flarum\Post\Post;
 use FoF\Upload\Repositories\FileRepository;
@@ -35,7 +37,7 @@ class AddCurrentPostAttributes
         }
 
         if (!isset($attributes['contentType']) || ($attributes['contentType'] !== 'comment')) {
-            return $attributes; 
+            return $attributes;
         }
 
         $content = $attributes['content'];
@@ -51,10 +53,19 @@ class AddCurrentPostAttributes
      */
     private function replaceImageXBBCode($content)
     {
-        $regexpr = '/\[upl-imagex-preview[^]]+]/i';
+        $regexpr = '/\[upl-imagex-(video-)?preview [^]]+]/i';
 
         return preg_replace_callback($regexpr, function ($s) {
             $s = $s[0];
+
+            if (Str::startsWith($s, "[upl-imagex-preview ")) {
+                $feature = ImageXPreviewTemplate::templateName;
+            } else if (Str::startsWith($s, "[upl-imagex-video-preview ")) {
+                $feature = ImageXVideoPreviewTemplate::templateName;
+            } else {
+                return "";
+            }
+
             $kvs = array_filter(explode(' ', $s), function ($it) {
                 return Str::contains($it, '=');
             });
@@ -76,9 +87,18 @@ class AddCurrentPostAttributes
             }
 
             $uuid = $file->uuid;
-            $previewUri = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
-            $fullscreenUri = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
-            return "[upl-imagex-preview uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
+
+            if ($feature == ImageXPreviewTemplate::templateName) {
+                $previewUri = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
+                $fullscreenUri = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
+                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
+            } else if ($feature == ImageXVideoPreviewTemplate::templateName) {
+                $previewUri = $this->config->generateUrl($file, $this->config->videoPreviewTemplate);
+                $fullscreenUri = "place-holder";
+                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
+            } else {
+                return "";
+            }
         }, $content);
     }
 }

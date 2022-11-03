@@ -7,6 +7,8 @@ use FoF\Upload\Templates\AbstractTextFormatterTemplate;
 
 class ImageXPreviewTemplate extends AbstractTextFormatterTemplate
 {
+    public const templateName = "upl-imagex-preview";
+
     /**
      * @var string
      */
