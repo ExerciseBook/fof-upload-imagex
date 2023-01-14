@@ -39,8 +39,12 @@ class ImageXVideoPreviewFormatter
     {
         return Utils::replaceAttributes($xml, 'UPL-IMAGEX-VIDEO-PREVIEW', function ($attributes) {
             $file = $this->files->findByUuid($attributes['uuid']);
-            $attributes["preview_uri"] = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
-            $attributes["fullscreen_uri"] = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
+            $preview_url = $this->config->generateUrl($file, $this->config->videoPreviewTemplate);
+            $file->url = $preview_url;
+            $file->save();
+
+            $file = $this->files->findByUuid($attributes['uuid']);
+            $attributes["preview_uri"] = $preview_url;
             $attributes["base_name"] = $file->base_name;
             return $attributes;
         });

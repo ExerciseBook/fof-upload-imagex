@@ -93,11 +93,31 @@ app.initializers.add('exercisebook-fof-upload-imagex', function (app) {
 
         .registerSetting(
             {
+                setting: setting('audioPreviewTemplate'),
+                label: label('audioPreviewTemplate'),
+                help: help('audioPreviewTemplate'),
+                type: 'text',
+            },
+            300
+        )
+
+        .registerSetting(
+            {
+                setting: setting('genericPreviewTemplate'),
+                label: label('genericPreviewTemplate'),
+                help: help('genericPreviewTemplate'),
+                type: 'text',
+            },
+            200
+        )
+
+        .registerSetting(
+            {
                 setting: setting('fileRetrievingSignatureToken'),
                 label: label('fileRetrievingSignatureToken'),
                 help: help('fileRetrievingSignatureToken'),
                 type: 'text',
             },
-            300
+            100
         )
 });

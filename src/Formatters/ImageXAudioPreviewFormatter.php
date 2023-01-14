@@ -7,7 +7,7 @@ use FoF\Upload\Repositories\FileRepository;
 use s9e\TextFormatter\Renderer;
 use s9e\TextFormatter\Utils;
 
-class ImageXPreviewFormatter
+class ImageXAudioPreviewFormatter
 {
     /**
      * @var FileRepository
@@ -37,14 +37,13 @@ class ImageXPreviewFormatter
      */
     public function __invoke(Renderer $renderer, $context, string $xml)
     {
-        return Utils::replaceAttributes($xml, 'UPL-IMAGEX-PREVIEW', function ($attributes) {
+        return Utils::replaceAttributes($xml, 'UPL-IMAGEX-AUDIO-PREVIEW', function ($attributes) {
             $file = $this->files->findByUuid($attributes['uuid']);
-            $preview_url = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
+            $preview_url = $this->config->generateUrl($file, $this->config->audioPreviewTemplate);
             $file->url = $preview_url;
             $file->save();
 
             $attributes["preview_uri"] = $preview_url;
-            $attributes["fullscreen_uri"] = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
             $attributes["base_name"] = $file->base_name;
             return $attributes;
         });

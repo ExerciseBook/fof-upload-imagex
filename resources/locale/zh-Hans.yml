@@ -20,6 +20,8 @@ exercisebook-fof-upload-imagex:
         imagePreviewTemplate: 图像小图处理模板
         imageFullscreenTemplate: 图像大图处理模板
         videoPreviewTemplate: 视频预览处理模板
+        audioPreviewTemplate: 音频预览模板
+        genericPreviewTemplate: 通用预览模板
         fileRetrievingSignatureToken: 文件鉴权密钥
 
       imagexHelp:
@@ -29,11 +31,13 @@ exercisebook-fof-upload-imagex:
         serviceId: 您的 ImageX 服务 ID
         domain: 您的 ImageX 服务域名
         imagePreviewTemplate: （可选的）图像小图处理模板
-        imageFullscreenTemplate: （可选的）图像大图处理模板，当使用 `iamdarkle/fancybox` 时将作为大图的显示方式，建议留空。
+        imageFullscreenTemplate: （可选的）图像大图处理模板，当使用 `iamdarkle/fancybox` 时将作为大图的显示方式，建议留空或获取原图的模板。
         videoPreviewTemplate: （可选的）视频处理模板
+        audioPreviewTemplate: （可选的）音频模板，一般留空或获取原图的模板。
+        genericPreviewTemplate: （可选的）通用文件模板，一般留空或获取原图的模板。
         fileRetrievingSignatureToken: |-
           （可选的）使用文件鉴权密钥可以实现防盗链功能。
-          本插件使用方法 C 作为文件鉴权方式。 
+          本插件使用方法 C 作为文件鉴权方式。
           火山引擎 ImageX 鉴权说明：https://www.volcengine.com/docs/508/75859
 
     template:
@@ -43,3 +47,9 @@ exercisebook-fof-upload-imagex:
       video-preview:
         name: ImageX 视频预览模板
         description: ImageX 视频预览模板
+      audio-preview:
+        name: ImageX 音频预览模板
+        description: ImageX 音频预览模板
+      generic-preview:
+        name: ImageX 通用文件预览模板
+        description: ImageX 通用文件预览模板

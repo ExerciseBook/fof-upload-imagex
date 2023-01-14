@@ -3,7 +3,9 @@
 namespace ExerciseBook\FofUploadImageX\Extenders;
 
 use ExerciseBook\FofUploadImageX\Configuration\ImageXConfiguration;
+use ExerciseBook\FofUploadImageX\Templates\ImageXGenericPreviewTemplate;
 use ExerciseBook\FofUploadImageX\Templates\ImageXPreviewTemplate;
+use ExerciseBook\FofUploadImageX\Templates\ImageXAudioPreviewTemplate;
 use ExerciseBook\FofUploadImageX\Templates\ImageXVideoPreviewTemplate;
 use Flarum\Api\Serializer\PostSerializer;
 use Flarum\Post\Post;
@@ -53,7 +55,7 @@ class AddCurrentPostAttributes
      */
     private function replaceImageXBBCode($content)
     {
-        $regexpr = '/\[upl-imagex-(video-)?preview [^]]+]/i';
+        $regexpr = '/\[upl-imagex-((video|audio|generic)-)?preview [^]]+]/i';
 
         return preg_replace_callback($regexpr, function ($s) {
             $s = $s[0];
@@ -62,6 +64,10 @@ class AddCurrentPostAttributes
                 $feature = ImageXPreviewTemplate::templateName;
             } else if (Str::startsWith($s, "[upl-imagex-video-preview ")) {
                 $feature = ImageXVideoPreviewTemplate::templateName;
+            } else if (Str::startsWith($s, "[upl-imagex-audio-preview ")) {
+                $feature = ImageXAudioPreviewTemplate::templateName;
+            } else if (Str::startsWith($s, "[upl-imagex-generic-preview ")) {
+                $feature = ImageXGenericPreviewTemplate::templateName;
             } else {
                 return "";
             }
@@ -87,15 +93,22 @@ class AddCurrentPostAttributes
             }
 
             $uuid = $file->uuid;
+            $filename = $file->base_name;
+            $fullscreenUri = "place-holder";
 
             if ($feature == ImageXPreviewTemplate::templateName) {
                 $previewUri = $this->config->generateUrl($file, $this->config->imagePreviewTemplate);
                 $fullscreenUri = $this->config->generateUrl($file, $this->config->imageFullscreenTemplate);
-                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
+                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri} base_name=${filename}]";
             } else if ($feature == ImageXVideoPreviewTemplate::templateName) {
                 $previewUri = $this->config->generateUrl($file, $this->config->videoPreviewTemplate);
-                $fullscreenUri = "place-holder";
-                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri}]";
+                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri} base_name=${filename}]";
+            } else if ($feature == ImageXAudioPreviewTemplate::templateName) {
+                $previewUri = $this->config->generateUrl($file, $this->config->audioPreviewTemplate);
+                return "[${feature} uuid=${uuid} preview_uri=${previewUri} fullscreen_uri=${fullscreenUri} base_name=${filename}]";
+            } else if ($feature == ImageXGenericPreviewTemplate::templateName) {
+                $size = $file->humanSize;
+                return "[$feature uuid={$file->uuid} name=${filename} size={$size}]";
             } else {
                 return "";
             }

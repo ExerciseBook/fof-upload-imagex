@@ -32,6 +32,16 @@ class ImageXConfiguration
     /**
      * @var string
      */
+    public $audioPreviewTemplate;
+
+    /**
+     * @var string
+     */
+    public $genericPreviewTemplate;
+
+    /**
+     * @var string
+     */
     public $fileRetrievingSignatureToken;
 
     public function __construct(SettingsRepositoryInterface $settings)
@@ -49,6 +59,8 @@ class ImageXConfiguration
         $this->imageFullscreenTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.imageFullscreenTemplate', ''));
         $this->fileRetrievingSignatureToken = $settings->get('exercisebook-fof-upload-imagex.imagexConfig.fileRetrievingSignatureToken', '');
         $this->videoPreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.videoPreviewTemplate', ''));
+        $this->audioPreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.audioPreviewTemplate', ''));
+        $this->genericPreviewTemplate = $this->read_template($settings->get('exercisebook-fof-upload-imagex.imagexConfig.genericPreviewTemplate', ''));
         $this->imagexConfig = $config;
     }
 
@@ -114,13 +126,13 @@ class ImageXConfiguration
     public function generateUrl($file, $template)
     {
         if ($this->needSignature()) {
-            if (Str::startsWith($file->type, 'image/') && $this->isTemplate($template)) {
+            if ($this->isTemplate($template)) {
                 return "//" . $this->signPath('/' . $file->path . $template);
             } else {
                 return "//" . $this->signPath('/' . $file->path);
             }
         } else {
-            if (Str::startsWith($file->type, 'image/') && $this->isTemplate($template)) {
+            if ($this->isTemplate($template)) {
                 return "//" . $this->imagexConfig->domain . '/' . $file->path . $template;
             } else {
                 return "//" . $this->imagexConfig->domain . '/' . $file->path;
