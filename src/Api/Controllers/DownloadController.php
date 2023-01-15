@@ -74,7 +74,7 @@ class DownloadController implements RequestHandlerInterface
             throw new ModelNotFoundException();
         }
 
-        $url = $this->imagexConfig->generateUrl($file, $this->config->genericPreviewTemplate);
+        $url = $this->imagexConfig->generateUrl($file, $this->imagexConfig->genericPreviewTemplate);
         return new RedirectResponse($url);
     }
 }
