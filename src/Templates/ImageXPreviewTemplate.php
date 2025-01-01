@@ -4,6 +4,7 @@ namespace ExerciseBook\FofUploadImageX\Templates;
 
 use FoF\Upload\File;
 use FoF\Upload\Templates\AbstractTextFormatterTemplate;
+use Illuminate\Contracts\View\View;
 
 class ImageXPreviewTemplate extends AbstractTextFormatterTemplate
 {
@@ -33,7 +34,7 @@ class ImageXPreviewTemplate extends AbstractTextFormatterTemplate
     /**
      * {@inheritdoc}
      */
-    public function template(): string
+    public function template(): View
     {
         return $this->getView('exercisebook-fof-upload-imagex.templates::imagex-preview');
     }
